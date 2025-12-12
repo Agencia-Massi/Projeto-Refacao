@@ -4,36 +4,11 @@ from dotenv import load_dotenv
 from supabase import create_client, Client
 import pandas as pd
 
-
-def check_password():
-    if "password_correct" not in st.session_state:
-        st.session_state.password_correct = False
-
-    if not st.session_state.password_correct:
-        st.markdown("### 🔒")
-        password = st.text_input("Digite a senha:", type="password")
-
-        if password == st.secrets["general"]["password"]:
-            st.session_state.password_correct = True
-            st.rerun()
-        elif password:
-            st.error("Senha incorreta")
-            st.stop()
-        else:
-            st.stop()
-
-    return True
-
-
-if check_password():
-    st.title("")   
-
-
 load_dotenv()
-url: str = os.getenv("SUPABASE_URL") or st.secrets["supabase"]["url"]
-key: str = os.getenv("SUPABASE_KEY") or st.secrets["supabase"]["key"]
+url: str = os.getenv("SUPABASE_URL") 
+key: str = os.getenv("SUPABASE_KEY")
 
-supabase = create_client(url, key)
+supabase: Client = create_client(url, key)
 
 
 try:
